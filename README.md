@@ -27,4 +27,22 @@ go build -trimpath -ldflags="-s -w" -o ocp-mlkem-check ./main.go
   -timeout duration
     	Overall HTTP client timeout (default 5s)
 ```
-tt
+# Use within OpenShift
+1- Use the Dockerfile
+
+2- Build and push:
+```
+export IMG=quay.io/<org>/ocp-mlkem-check:latest   # or ghcr.io/<you>/..., or your internal registry
+docker build -t "$IMG" .
+docker push "$IMG"
+```
+
+3- Adjust `ocp-test-job.yaml` to pull from your repository
+
+4- Create a project for the test, apply the yaml, check the logs:
+```
+oc new-project mlkem-test
+oc apply -f job.yaml
+oc logs -n mlkem-test job/ocp-mlkem-check
+oc get jobs -n mlkem-test
+```
