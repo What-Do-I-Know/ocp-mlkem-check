@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ocp-mlkem-check
+  namespace: mlkem-test
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      restartPolicy: Never
+      containers:
+      - name: check
+        image: quay.io/<your_repo>\ocp-mlkem-check:latest
+        imagePullPolicy: IfNotPresent
+        args:
+          # Use the in-cluster APIServer and require ML-KEM:
+          - "--path=/version"
+          - "--require-mlkem"
+          # Optional: force PQ only (makes lack of support obvious)
+          # - "--force-mlkem"
+        env:
+          # Optional A/B via Go’s TLS toggle:
+          # - name: GODEBUG
+          #   value: "tlsmlkem=1"    # (1 is default on Go 1.25)
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          seccompProfile: { type: RuntimeDefault }
+          capabilities: { drop: ["ALL"] }
+  backoffLimit: 0
