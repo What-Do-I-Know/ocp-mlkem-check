@@ -7,7 +7,7 @@ If running with a self-signed certificate, you'll need to extract it:
  `echo Q | openssl s_client -connect api.<cluster>:6443 -CAfile ./ca.crt`
 
 # Build:
-go build -trimpath -ldflags="-s -w" -o ocp-mlkem-check ./main.go
+`go build -trimpath -ldflags="-s -w" -o ocp-mlkem-check ./main.go`
 
 # Usage of ocp-mlkem-check:
 ```
