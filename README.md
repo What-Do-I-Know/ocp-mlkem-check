@@ -38,12 +38,12 @@ docker build -t "$IMG" .
 docker push "$IMG"
 ```
 
-3- Adjust `ocp-test-job.yaml` to pull from your repository
+3- Adjust `ocp-mlkem-test-job.yaml` to pull from your repository
 
 4- Create a project for the test, apply the yaml, check the logs:
 ```
 oc new-project mlkem-test
-oc apply -f job.yaml
+oc apply -f ocp-mlkem-test-job.yaml
 oc logs -n mlkem-test job/ocp-mlkem-check
 oc get jobs -n mlkem-test
 ```
