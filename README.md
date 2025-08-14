@@ -2,8 +2,9 @@ This is a simple Go tool to check if the OCP API server supports ML-KEM.
 
 # Prerequisite:
 Use Go version 1.25+ since it requires ML-KEM support in Go & support for `tls.ConnectionState.CurveID` support. Tested with go version go1.25.0 (from upstream) on RHEL 10
+
 If running with a self-signed certificate, you'll need to extract it:
-echo Q | openssl s_client -connect api.<cluster>:6443 -CAfile ./ca.crt
+ `echo Q | openssl s_client -connect api.<cluster>:6443 -CAfile ./ca.crt`
 
 # Build:
 go build -trimpath -ldflags="-s -w" -o ocp-mlkem-check ./main.go
